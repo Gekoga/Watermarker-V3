@@ -1,4 +1,5 @@
 import enum
+from observerPattern import Subject, Observer
 from PyQt6.QtWidgets import (
     QWidget,
     QLabel,
@@ -9,12 +10,38 @@ from PyQt6.QtWidgets import (
     QFileDialog,
 )
 
+class FileNameSubject(Subject):
+    _file_name: str
+    _observers: list[Observer] = []
+
+    def attach(self, observer: Observer) -> None:
+        self._observers.append(observer)
+
+    def detach(self, observer: Observer) -> None:
+        try:
+            self._observers.remove(observer)
+        except ValueError:
+            print("Subject: Observer not found")
+
+    def notify(self) -> None:
+        for observer in self._observers:
+            observer.update(self)
+
+    def setFileName(self, file_name: str) -> None:
+        self._file_name = file_name
+        self.notify()
+
+    def getFileName(self) -> str:
+        return self._file_name
+
 
 class CustomFileSelector(QWidget):
     class FileTypes(enum.Enum):
         ANY = ...
         IMAGES = ...
         TEXT = ...
+
+    _file_name_subject = FileNameSubject()
 
     def __init__(self, file_type: FileTypes) -> None:
         super().__init__()
@@ -28,21 +55,24 @@ class CustomFileSelector(QWidget):
         select_file_button = QPushButton()
         select_file_button.setText("Select")
 
+        # Decorator for button clicked, open the file dialog
         @select_file_button.clicked.connect
         def _():
-            file_select_dialog.exec()
+            self.file_select_dialog.exec()
 
-        file_select_dialog = QFileDialog()
-        file_select_dialog.setFileMode(QFileDialog.FileMode.ExistingFile)
+        self.file_select_dialog = QFileDialog()
+        self.file_select_dialog.setFileMode(QFileDialog.FileMode.ExistingFile)
         match file_type:
             case self.FileTypes.IMAGES:
-                file_select_dialog.setNameFilter("Images (*.png *.jpg *.jpeg)")
+                self.file_select_dialog.setNameFilter("Images (*.png *.jpg *.jpeg)")
             case self.FileTypes.TEXT:
-                file_select_dialog.setNameFilter("Text (*.txt)")
+                self.file_select_dialog.setNameFilter("Text (*.txt)")
 
-        @file_select_dialog.fileSelected.connect
-        def _(file_name):
-            file_name_line.setText(f"{file_name}")
+        # Decorator for when a file is selected
+        @self.file_select_dialog.fileSelected.connect
+        def _(file_name: str):
+            file_name_line.setText(file_name)
+            self._file_name_subject.setFileName(file_name)
 
         action_layout = QHBoxLayout()
         action_layout.addWidget(file_name_line)
