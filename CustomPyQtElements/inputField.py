@@ -30,6 +30,8 @@ class ReactiveCustomInput(Observer):
         self._input_field = CustomInputField(informing_text)
 
     def update(self, subject: Subject) -> None:
+
+        # TODO: if there are multiple different subjects, change it to a switch statement, with functions
         if type(subject) != FileNameSubject:
             return
 

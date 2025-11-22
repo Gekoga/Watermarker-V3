@@ -5,21 +5,24 @@ from abc import ABC, abstractmethod
 
 class Subject(ABC):
     # Interface for declaring a set of methods for managing subscribers
+    _observers: list[Observer] = []
 
-    @abstractmethod
+    # Attach an Observer to the subject
     def attach(self, observer: Observer) -> None:
-        # Attach an Observer to the subject
-        pass
+        self._observers.append(observer)
 
-    @abstractmethod
+    # Detach an Observer to the subject
     def detach(self, observer: Observer) -> None:
-        # Detach an Observer to the subject
-        pass
+        try:
+            self._observers.remove(observer)
+        except ValueError:
+            print("Subject: Observer not found")
 
-    @abstractmethod
+    # Notify all Observers
     def notify(self) -> None:
-        # Notify all Observers
-        pass
+        for observer in self._observers:
+            observer.update(self)
+
 
 
 class Observer(ABC):

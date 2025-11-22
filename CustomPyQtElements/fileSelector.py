@@ -12,20 +12,15 @@ from PyQt6.QtWidgets import (
 
 class FileNameSubject(Subject):
     _file_name: str
-    _observers: list[Observer] = []
 
     def attach(self, observer: Observer) -> None:
-        self._observers.append(observer)
+        return super().attach(observer)
 
     def detach(self, observer: Observer) -> None:
-        try:
-            self._observers.remove(observer)
-        except ValueError:
-            print("Subject: Observer not found")
+        return super().detach(observer)
 
     def notify(self) -> None:
-        for observer in self._observers:
-            observer.update(self)
+        return super().notify()
 
     def setFileName(self, file_name: str) -> None:
         self._file_name = file_name
