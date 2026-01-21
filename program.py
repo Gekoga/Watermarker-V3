@@ -1,7 +1,8 @@
 import sys
-from PyQt6.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout
+from PyQt6.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QGridLayout
 from CustomPyQtElements.watermarkTextField import CustomWatermarkInput
 from CustomPyQtElements.imageContainer import ReactiveImageField
+from CustomPyQtElements.imageContainer import ReactiveImageOverlay
 from CustomPyQtElements.fileSelector import CustomFileSelector
 from CustomPyQtElements.inputField import ReactiveCustomInput
 
@@ -27,11 +28,21 @@ class Window(QWidget):
         left_layout.addWidget(marked_image_input.getInputField())
 
         right_layout = QVBoxLayout()
+        preview_layout = QGridLayout()
         # Preview image
         preview_image = ReactiveImageField()
         file_selector._file_name_subject.attach(preview_image)
 
-        right_layout.addWidget(preview_image.getImageLabel())
+        preview_layout.addWidget(preview_image.getImageLabel(), 0, 0)
+
+        # Preview watermark text
+        preview_watermark = ReactiveImageOverlay()
+        watermark_input._watermark_text_subject.attach(preview_watermark)
+        file_selector._file_name_subject.attach(preview_watermark)
+
+        preview_layout.addWidget(preview_watermark.getOverlayLabel(), 0, 0)
+
+        right_layout.addLayout(preview_layout)
 
         # Font size
         # Font alpha

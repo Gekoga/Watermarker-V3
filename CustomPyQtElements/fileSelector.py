@@ -10,6 +10,7 @@ from PyQt6.QtWidgets import (
     QFileDialog,
 )
 
+
 class FileNameSubject(Subject):
     _file_name: str
 

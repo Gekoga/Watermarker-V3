@@ -36,7 +36,6 @@ class ReactiveCustomInput(Observer):
             return
 
         self._input_field.updateInputField(subject.getFileName())
-        print("Update the input field")
 
     def getInputField(self) -> CustomInputField:
         return self._input_field
