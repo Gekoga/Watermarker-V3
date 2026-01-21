@@ -7,6 +7,9 @@ class Subject(ABC):
     # Interface for declaring a set of methods for managing subscribers
     _observers: list[Observer] = []
 
+    def __init__(self) -> None:
+        self._observers = []
+
     # Attach an Observer to the subject
     def attach(self, observer: Observer) -> None:
         self._observers.append(observer)
@@ -22,7 +25,6 @@ class Subject(ABC):
     def notify(self) -> None:
         for observer in self._observers:
             observer.update(self)
-
 
 
 class Observer(ABC):
