@@ -36,6 +36,7 @@ class CustomFileSelector(QWidget):
         ANY = ...
         IMAGES = ...
         TEXT = ...
+        PDF = ...
 
     _file_name_subject = FileNameSubject()
 
@@ -63,6 +64,8 @@ class CustomFileSelector(QWidget):
                 self.file_select_dialog.setNameFilter("Images (*.png *.jpg *.jpeg)")
             case self.FileTypes.TEXT:
                 self.file_select_dialog.setNameFilter("Text (*.txt)")
+            case self.FileTypes.PDF:
+                self.file_select_dialog.setNameFilter("PDF (*.pdf)")
 
         # Decorator for when a file is selected
         @self.file_select_dialog.fileSelected.connect

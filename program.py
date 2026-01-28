@@ -1,5 +1,6 @@
 import sys
 from PyQt6.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QGridLayout
+from CustomPyQtElements.valueSlider import CustomSlider
 from CustomPyQtElements.watermarkTextField import CustomWatermarkInput
 from CustomPyQtElements.imageContainer import ReactiveImageField
 from CustomPyQtElements.imageContainer import ReactiveImageOverlay
@@ -45,7 +46,13 @@ class Window(QWidget):
         right_layout.addLayout(preview_layout)
 
         # Font size
+        font_slider = CustomSlider("Font size", 1)
+        right_layout.addWidget(font_slider)
+
         # Font alpha
+        alpha_slider = CustomSlider("Alpha value", 1, 255, 150)
+        right_layout.addWidget(alpha_slider)
+
         # Font colour
         # Save/Cancel buttons
 
