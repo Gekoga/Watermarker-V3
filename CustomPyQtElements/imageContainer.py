@@ -5,6 +5,7 @@ from PyQt6.QtGui import (
 )
 from PyQt6.QtCore import Qt
 
+from CustomPyQtElements.valueSlider import NumberSubject
 from observerPattern import Observer, Subject
 from CustomPyQtElements.fileSelector import FileNameSubject
 from CustomPyQtElements.watermarkTextField import WatermarkTextSubject
@@ -44,18 +45,28 @@ class ReactiveImageField(Observer):
 
 class ReactiveImageOverlay(Observer):
     _overlay_container: QLabel
+    _overlay_text: str
 
     def __init__(self) -> None:
         super().__init__()
         self._overlay_container = QLabel()
+        self._overlay_text = ""
 
     def update(self, subject: Subject) -> None:
-        # if type(subject) != WatermarkTextSubject:
-        #     return
-        
+        match subject:
+            case WatermarkTextSubject():
+                self._overlay_text = subject.getWatermarkText()
+            case FileNameSubject():
+                print("FileNameSubject")
+            case NumberSubject():
+                # TODO: Make it that you can have multiple number subjects, not just the font size
+                image_helper.setFontSize(subject.getSliderValue())
+
         try:
-            overlay_image = image_helper.getCopyOfOverlay()
-            self._overlay_container.setPixmap(QPixmap.fromImage(ImageQt(overlay_image)))
+            # display the text once on the screen, the size of the font
+            testing = image_helper.createTextOverlay(self._overlay_text)
+
+            self._overlay_container.setPixmap(QPixmap.fromImage(ImageQt(testing)))
         except Exception as e:
             print("Error: overlay image")
             print(f"{e}")

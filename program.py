@@ -38,8 +38,8 @@ class Window(QWidget):
 
         # Preview watermark text
         preview_watermark = ReactiveImageOverlay()
-        watermark_input._watermark_text_subject.attach(preview_watermark)
-        file_selector._file_name_subject.attach(preview_watermark)
+        watermark_input._watermark_text_subject.attach(preview_watermark) # Attach watermark overlay to changes to the watermark input
+        file_selector._file_name_subject.attach(preview_watermark) # Attach watermark overlay to changes to the selected image
 
         preview_layout.addWidget(preview_watermark.getOverlayLabel(), 0, 0)
 
@@ -48,10 +48,13 @@ class Window(QWidget):
         # Font size
         font_slider = CustomSlider("Font size", 1)
         right_layout.addWidget(font_slider)
+        font_slider._number_subject.attach(preview_watermark) # Attach watermark overlay to changes in font size
 
         # Font alpha
         alpha_slider = CustomSlider("Alpha value", 1, 255, 150)
         right_layout.addWidget(alpha_slider)
+        alpha_slider._number_subject.attach(preview_watermark) # Attach watermark overlay to changes in font alpha (see-through)
+
 
         # Font colour
         # Save/Cancel buttons
