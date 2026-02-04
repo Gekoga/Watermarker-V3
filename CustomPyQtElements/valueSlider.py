@@ -24,7 +24,7 @@ class NumberSubject(Subject):
 
 
 class CustomSlider(QWidget):
-    numberSubject = NumberSubject()
+    _number_subject: NumberSubject
 
     def __init__(
         self,
@@ -34,6 +34,8 @@ class CustomSlider(QWidget):
         starting_value: int = 50,
     ) -> None:
         super().__init__()
+
+        self._number_subject = NumberSubject()
 
         top_layout = QHBoxLayout()
         self._slider_label = QLabel(slider_text + ":")
@@ -55,7 +57,7 @@ class CustomSlider(QWidget):
         @self._value_slider.valueChanged.connect
         def _(slider_value):
             self._value_label.setText(f"{slider_value}")
-            self.numberSubject.updateSliderValue(slider_value)
+            self._number_subject.updateSliderValue(slider_value)
 
         bottom_layout.addWidget(self._minimum_label)
         bottom_layout.addWidget(self._value_slider)

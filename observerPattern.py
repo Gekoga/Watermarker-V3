@@ -5,7 +5,7 @@ from abc import ABC, abstractmethod
 
 class Subject(ABC):
     # Interface for declaring a set of methods for managing subscribers
-    _observers: list[Observer] = []
+    _observers: list[Observer]
 
     def __init__(self) -> None:
         self._observers = []

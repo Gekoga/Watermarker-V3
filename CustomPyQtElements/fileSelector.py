@@ -38,10 +38,12 @@ class CustomFileSelector(QWidget):
         TEXT = ...
         PDF = ...
 
-    _file_name_subject = FileNameSubject()
+    _file_name_subject: FileNameSubject
 
     def __init__(self, file_type: FileTypes) -> None:
         super().__init__()
+
+        self._file_name_subject = FileNameSubject()
 
         informing_label = QLabel("Selected file")
 
