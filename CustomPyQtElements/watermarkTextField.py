@@ -25,9 +25,6 @@ class WatermarkTextSubject(Subject):
 class CustomWatermarkInput(CustomInputField):
     _watermark_text_subject: WatermarkTextSubject
 
-    # TODO: Check why this element is in the observer list.
-    # To test, add print(f"{observer}") to the observer notify in observerPattern.py
-
     def __init__(self) -> None:
         super().__init__("Watermark text")
 

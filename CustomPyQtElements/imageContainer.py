@@ -5,7 +5,7 @@ from PyQt6.QtGui import (
 )
 from PyQt6.QtCore import Qt
 
-from CustomPyQtElements.valueSlider import NumberSubject
+from CustomPyQtElements.valueSlider import NumberSubject, SliderUse
 from observerPattern import Observer, Subject
 from CustomPyQtElements.fileSelector import FileNameSubject
 from CustomPyQtElements.watermarkTextField import WatermarkTextSubject
@@ -59,8 +59,7 @@ class ReactiveImageOverlay(Observer):
             case FileNameSubject():
                 print("FileNameSubject")
             case NumberSubject():
-                # TODO: Make it that you can have multiple number subjects, not just the font size
-                image_helper.setFontSize(subject.getSliderValue())
+                self.numberSubjectSwitch(subject)
 
         try:
             # display the text once on the screen, the size of the font
@@ -75,3 +74,12 @@ class ReactiveImageOverlay(Observer):
 
     def getOverlayLabel(self) -> QLabel:
         return self._overlay_container
+    
+    def numberSubjectSwitch(self, number_subject: NumberSubject):
+        match number_subject.getSliderType():
+            case SliderUse.FONT:
+                image_helper.setFontSize(number_subject.getSliderValue())
+            case SliderUse.ALPHA:
+                image_helper.setFontAlpha(number_subject.getSliderValue())
+            case _:
+                print("SliderUse not implemented yet")

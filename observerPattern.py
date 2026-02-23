@@ -2,7 +2,7 @@
 from __future__ import annotations
 from abc import ABC, abstractmethod
 
-
+# TODO: Clear duplicate code within the different subjects
 class Subject(ABC):
     # Interface for declaring a set of methods for managing subscribers
     _observers: list[Observer]
@@ -25,6 +25,9 @@ class Subject(ABC):
     def notify(self) -> None:
         for observer in self._observers:
             observer.update(self)
+    
+    def notifySingleObserver(self, observer: Observer) -> None:
+        observer.update(self)
 
 
 class Observer(ABC):

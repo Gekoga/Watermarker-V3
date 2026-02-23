@@ -1,6 +1,6 @@
 import sys
 from PyQt6.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QGridLayout
-from CustomPyQtElements.valueSlider import CustomSlider
+from CustomPyQtElements.valueSlider import CustomSlider, SliderUse
 from CustomPyQtElements.watermarkTextField import CustomWatermarkInput
 from CustomPyQtElements.imageContainer import ReactiveImageField
 from CustomPyQtElements.imageContainer import ReactiveImageOverlay
@@ -46,15 +46,16 @@ class Window(QWidget):
         right_layout.addLayout(preview_layout)
 
         # Font size
-        font_slider = CustomSlider("Font size", 1)
+        font_slider = CustomSlider("Font size", SliderUse.FONT, 1)
         right_layout.addWidget(font_slider)
         font_slider._number_subject.attach(preview_watermark) # Attach watermark overlay to changes in font size
+        font_slider._number_subject.notifySingleObserver(preview_watermark) # Update after initialisation, because of the default values
 
         # Font alpha
-        alpha_slider = CustomSlider("Alpha value", 1, 255, 150)
+        alpha_slider = CustomSlider("Alpha value", SliderUse.ALPHA, 1, 255, 150)
         right_layout.addWidget(alpha_slider)
         alpha_slider._number_subject.attach(preview_watermark) # Attach watermark overlay to changes in font alpha (see-through)
-
+        alpha_slider._number_subject.notifySingleObserver(preview_watermark) # Update after initialisation, because of the default values
 
         # Font colour
         # Save/Cancel buttons
