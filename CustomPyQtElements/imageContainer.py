@@ -1,14 +1,11 @@
 from PIL.ImageQt import ImageQt
 from PyQt6.QtWidgets import QLabel
-from PyQt6.QtGui import (
-    QPixmap,
-)
+from PyQt6.QtGui import QPixmap
 from PyQt6.QtCore import Qt
 
 from CustomPyQtElements.alphaSlider import AlphaSubject
 from CustomPyQtElements.fontSlider import FontSubject
 from observerPattern import Observer, Subject
-from CustomPyQtElements.BaseElements.valueSlider import NumberSubject
 from CustomPyQtElements.BaseElements.fileSelector import FileNameSubject
 from CustomPyQtElements.watermarkTextField import WatermarkTextSubject
 from imageHelper import ImageHelper
@@ -60,14 +57,23 @@ class ReactiveImageOverlay(Observer):
                 self._overlay_text = subject.getWatermarkText()
             case FileNameSubject():
                 print("FileNameSubject")
-            case NumberSubject():
-                self.numberSubjectSwitch(subject)
+            case FontSubject():
+                image_helper.setFontSize(subject.getFontSize())
+            case AlphaSubject():
+                image_helper.setFontAlpha(subject.getAlphaValue())
+            case _:
+                print("Subject has not been implemented yet.")
 
         try:
             # display the text once on the screen, the size of the font
-            testing = image_helper.createTextOverlay(self._overlay_text)
+            overlay_image = image_helper.createTextOverlay(self._overlay_text)
 
-            self._overlay_container.setPixmap(QPixmap.fromImage(ImageQt(testing)))
+            if overlay_image == None:
+                raise TypeError("overlay_image is of type None")
+
+            self._overlay_container.setPixmap(QPixmap.fromImage(ImageQt(overlay_image)))
+        except TypeError:
+            return
         except Exception as e:
             print("Error: overlay image")
             print(f"{e}")
@@ -76,12 +82,3 @@ class ReactiveImageOverlay(Observer):
 
     def getOverlayLabel(self) -> QLabel:
         return self._overlay_container
-    
-    def numberSubjectSwitch(self, number_subject: NumberSubject):
-        match number_subject:
-            case FontSubject():
-                image_helper.setFontSize(number_subject.getFontSize())
-            case AlphaSubject():
-                image_helper.setFontAlpha(number_subject.getAlphaValue())
-            case _:
-                print("SliderUse not implemented yet")

@@ -1,18 +1,9 @@
 from CustomPyQtElements.BaseElements.inputField import CustomInputField
-from observerPattern import Subject, Observer
+from observerPattern import Subject
 
 
 class WatermarkTextSubject(Subject):
     _watermark_text: str
-
-    def attach(self, observer: Observer) -> None:
-        return super().attach(observer)
-
-    def detach(self, observer: Observer) -> None:
-        return super().detach(observer)
-
-    def notify(self) -> None:
-        return super().notify()
 
     def setWatermarkText(self, watermark_text: str) -> None:
         self._watermark_text = watermark_text
