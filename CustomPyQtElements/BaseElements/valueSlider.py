@@ -1,18 +1,10 @@
-from observerPattern import Observer, Subject
+from observerPattern import Subject
 from PyQt6.QtWidgets import QWidget, QHBoxLayout, QVBoxLayout, QLabel, QSlider
 from PyQt6.QtCore import Qt
 
+
 class NumberSubject(Subject):
     _slider_value: int
-
-    def attach(self, observer: Observer) -> None:
-        return super().attach(observer)
-
-    def detach(self, observer: Observer) -> None:
-        return super().detach(observer)
-
-    def notify(self) -> None:
-        return super().notify()
 
     def updateSliderValue(self, slider_value: int) -> None:
         self._slider_value = slider_value

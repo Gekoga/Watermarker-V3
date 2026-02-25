@@ -1,5 +1,5 @@
 import enum
-from observerPattern import Subject, Observer
+from observerPattern import Subject
 from PyQt6.QtWidgets import (
     QWidget,
     QLabel,
@@ -14,15 +14,6 @@ from PyQt6.QtWidgets import (
 class FileNameSubject(Subject):
     _file_name: str
 
-    def attach(self, observer: Observer) -> None:
-        return super().attach(observer)
-
-    def detach(self, observer: Observer) -> None:
-        return super().detach(observer)
-
-    def notify(self) -> None:
-        return super().notify()
-
     def setFileName(self, file_name: str) -> None:
         self._file_name = file_name
         self.notify()
@@ -32,6 +23,7 @@ class FileNameSubject(Subject):
 
 
 class CustomFileSelector(QWidget):
+    # TODO: Change this from Enum to classes
     class FileTypes(enum.Enum):
         ANY = ...
         IMAGES = ...
