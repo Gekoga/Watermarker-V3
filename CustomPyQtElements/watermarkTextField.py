@@ -1,4 +1,4 @@
-from CustomPyQtElements.inputField import CustomInputField
+from CustomPyQtElements.BaseElements.inputField import CustomInputField
 from observerPattern import Subject, Observer
 
 

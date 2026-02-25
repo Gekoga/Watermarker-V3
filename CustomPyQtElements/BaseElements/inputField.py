@@ -1,6 +1,6 @@
 from PyQt6.QtWidgets import QLabel, QWidget, QLineEdit, QVBoxLayout
 from observerPattern import Subject, Observer
-from CustomPyQtElements.fileSelector import FileNameSubject
+from CustomPyQtElements.BaseElements.fileSelector import FileNameSubject
 
 
 class CustomInputField(QWidget):

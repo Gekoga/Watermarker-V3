@@ -5,9 +5,11 @@ from PyQt6.QtGui import (
 )
 from PyQt6.QtCore import Qt
 
-from CustomPyQtElements.valueSlider import NumberSubject, SliderUse
+from CustomPyQtElements.alphaSlider import AlphaSubject
+from CustomPyQtElements.fontSlider import FontSubject
 from observerPattern import Observer, Subject
-from CustomPyQtElements.fileSelector import FileNameSubject
+from CustomPyQtElements.BaseElements.valueSlider import NumberSubject
+from CustomPyQtElements.BaseElements.fileSelector import FileNameSubject
 from CustomPyQtElements.watermarkTextField import WatermarkTextSubject
 from imageHelper import ImageHelper
 
@@ -76,10 +78,10 @@ class ReactiveImageOverlay(Observer):
         return self._overlay_container
     
     def numberSubjectSwitch(self, number_subject: NumberSubject):
-        match number_subject.getSliderType():
-            case SliderUse.FONT:
-                image_helper.setFontSize(number_subject.getSliderValue())
-            case SliderUse.ALPHA:
-                image_helper.setFontAlpha(number_subject.getSliderValue())
+        match number_subject:
+            case FontSubject():
+                image_helper.setFontSize(number_subject.getFontSize())
+            case AlphaSubject():
+                image_helper.setFontAlpha(number_subject.getAlphaValue())
             case _:
                 print("SliderUse not implemented yet")
