@@ -1,6 +1,7 @@
 import sys
 from PyQt6.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QGridLayout
 from CustomPyQtElements.alphaSlider import CustomAlphaSlider
+from CustomPyQtElements.colorPicker import CustomColorPicker
 from CustomPyQtElements.fontSlider import CustomFontSlider
 from CustomPyQtElements.watermarkTextField import CustomWatermarkInput
 from CustomPyQtElements.imageContainer import ReactiveImageField
@@ -62,6 +63,8 @@ class Window(QWidget):
         alpha_slider._number_subject.notifySingleObserver(preview_watermark)
 
         # Font colour
+        color_picker = CustomColorPicker()
+        right_layout.addWidget(color_picker)
         # Save/Cancel buttons
 
         application_layout = QHBoxLayout()
