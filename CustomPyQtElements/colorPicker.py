@@ -5,26 +5,21 @@
 from PyQt6.QtWidgets import QColorDialog, QHBoxLayout, QPushButton, QWidget
 from PyQt6.QtGui import QColor
 from CustomPyQtElements.BaseElements.inputField import ReactiveCustomInput
-from CustomSubjects.colorSubject import ColorHexSubject
+from CustomSubjects.colorSubject import ColorSubject
 
 
 class CustomColorPicker(QWidget):
-    _color_hex_subject: ColorHexSubject
+    _color_subject: ColorSubject
 
     def __init__(self) -> None:
         super().__init__()
 
-        self._color_hex_subject = ColorHexSubject()
+        self._color_subject = ColorSubject()
 
         hex_field = ReactiveCustomInput("Select color")
-        self._color_hex_subject.attach(hex_field)
+        self._color_subject.attach(hex_field)
 
-        # TODO: Make this so you don't have to hardcode it here, but are able to call upon the needed object
-        @hex_field._input_field.input_field.textChanged.connect
-        def _(text: str):
-            self._color_hex_subject.setHexFromString(text)
-
-        # TODO: Change the styling of the button, so it is a square with the correct color 
+        # TODO: Change the styling of the button, so it is a square with the correct color
         select_color_button = QPushButton()
         select_color_button.setText("Pick color")
 
@@ -36,7 +31,15 @@ class CustomColorPicker(QWidget):
 
         @self.color_dialog.colorSelected.connect
         def _(selected_color: QColor):
-            self._color_hex_subject.setHexColor(selected_color.name())
+            self._color_subject.setColor(selected_color)
+
+        # TODO: Make this so you don't have to hardcode it here, but are able to call upon the needed object
+        @hex_field._input_field.input_field.textChanged.connect
+        def _(text: str):
+            succeeded = self._color_subject.setColorFromString(text)
+
+            if succeeded:
+                self.color_dialog.setCurrentColor(QColor.fromString(text))
 
         color_layout = QHBoxLayout()
         color_layout.addWidget(hex_field.getInputField())

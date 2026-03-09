@@ -3,18 +3,24 @@ from PyQt6.QtGui import QColor
 
 
 # Created an own file, to prefent circular imports
-class ColorHexSubject(Subject):
-    _color_hex: str
+class ColorSubject(Subject):
+    _color: QColor
 
-    def setHexColor(self, hex_color: str) -> None:
-        self._color_hex = hex_color
+    def setColor(self, color: QColor) -> None:
+        self._color = color
         self.notify()
 
-    def getHexColor(self) -> str:
-        return self._color_hex
+    def getColorString(self) -> str:
+        return self._color.name()
 
-    def setHexFromString(self, color_string: str):
+    def getColorAsRGBList(self):
+        return [self._color.red(), self._color.green(), self._color.blue()]
+
+    def setColorFromString(self, color_string: str) -> bool:
         color_from_string = QColor.fromString(color_string)
 
         if color_from_string.isValid():
-            self.setHexColor(color_from_string.name())
+            self.setColor(color_from_string)
+            return True
+
+        return False

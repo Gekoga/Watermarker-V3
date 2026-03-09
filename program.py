@@ -65,6 +65,9 @@ class Window(QWidget):
         # Font colour
         color_picker = CustomColorPicker()
         right_layout.addWidget(color_picker)
+        # Attach watermark overlay to changes in font color & Update after initialisation, because of the default values
+        color_picker._color_subject.attach(preview_watermark)
+
         # Save/Cancel buttons
 
         application_layout = QHBoxLayout()

@@ -5,6 +5,7 @@ from PyQt6.QtCore import Qt
 
 from CustomPyQtElements.alphaSlider import AlphaSubject
 from CustomPyQtElements.fontSlider import FontSubject
+from CustomSubjects.colorSubject import ColorSubject
 from observerPattern import Observer, Subject
 from CustomPyQtElements.BaseElements.fileSelector import FileNameSubject
 from CustomPyQtElements.watermarkTextField import WatermarkTextSubject
@@ -61,6 +62,8 @@ class ReactiveImageOverlay(Observer):
                 image_helper.setFontSize(subject.getFontSize())
             case AlphaSubject():
                 image_helper.setFontAlpha(subject.getAlphaValue())
+            case ColorSubject():
+                image_helper.setFontColor(subject.getColorAsRGBList())
             case _:
                 print("Subject has not been implemented yet.")
 

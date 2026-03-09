@@ -1,11 +1,11 @@
 from PyQt6.QtWidgets import QLabel, QWidget, QLineEdit, QVBoxLayout
-from CustomSubjects.colorSubject import ColorHexSubject
+from CustomSubjects.colorSubject import ColorSubject
 from observerPattern import Subject, Observer
 from CustomPyQtElements.BaseElements.fileSelector import FileNameSubject
 
 
 class CustomInputField(QWidget):
-    def __init__(self, informing_text = "") -> None:
+    def __init__(self, informing_text="") -> None:
         super().__init__()
 
         layout = QVBoxLayout()
@@ -19,7 +19,6 @@ class CustomInputField(QWidget):
         self.input_field.setEnabled(True)
         layout.addWidget(self.input_field)
 
-
         self.setLayout(layout)
 
     def updateInputField(self, new_input_text):
@@ -29,7 +28,7 @@ class CustomInputField(QWidget):
 class ReactiveCustomInput(Observer):
     _input_field: CustomInputField
 
-    def __init__(self, informing_text = "") -> None:
+    def __init__(self, informing_text="") -> None:
         super().__init__()
         self._input_field = CustomInputField(informing_text)
 
@@ -37,9 +36,8 @@ class ReactiveCustomInput(Observer):
         match subject:
             case FileNameSubject():
                 self._input_field.updateInputField(subject.getFileName())
-            case ColorHexSubject():
-                self._input_field.updateInputField(subject.getHexColor())
-
+            case ColorSubject():
+                self._input_field.updateInputField(subject.getColorString())
 
     def getInputField(self) -> CustomInputField:
         return self._input_field

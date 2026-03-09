@@ -10,7 +10,8 @@ class ImageHelper:
     _empty_overlay_image: Image.Image
 
     _font_size_preview: int
-    _font_alpha_preview: int
+
+    _ink_color: list[int] = [255, 255, 255, 255]
 
     def getImageFromPath(self, input_image_path: str) -> Image.Image | None:
         if input_image_path == "" or input_image_path == None:
@@ -50,7 +51,16 @@ class ImageHelper:
         self._font_size_preview = font_size
 
     def setFontAlpha(self, font_alpha):
-        self._font_alpha_preview = font_alpha
+        rgb_color = self._ink_color[:3]
+        self._ink_color = rgb_color
+
+        self._ink_color.append(font_alpha)
+
+    def setFontColor(self, font_color: list[int]):
+        font_alpha = self._ink_color[-1]
+
+        self._ink_color = font_color
+        self._ink_color.append(font_alpha)
 
     def createTextOverlay(self, overlay_text: str):
         overlay_image = self.getCopyOfOverlay()
@@ -62,7 +72,10 @@ class ImageHelper:
         overlay_draw = ImageDraw.Draw(overlay_image)
 
         overlay_draw.text(
-            (0.0, 0.0), overlay_text, fill=(255, 255, 255, self._font_alpha_preview), font=font
+            (0.0, 0.0),
+            overlay_text,
+            fill=tuple(self._ink_color),
+            font=font,
         )
 
         return overlay_image
