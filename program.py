@@ -1,7 +1,15 @@
 import sys
-from PyQt6.QtWidgets import QWidget, QApplication, QHBoxLayout, QVBoxLayout, QGridLayout
+from PyQt6.QtWidgets import (
+    QPushButton,
+    QWidget,
+    QApplication,
+    QHBoxLayout,
+    QVBoxLayout,
+    QGridLayout,
+)
 from CustomPyQtElements.alphaSlider import CustomAlphaSlider
 from CustomPyQtElements.colorPicker import CustomColorPicker
+from CustomPyQtElements.saveButton import CustomSaveButton
 from CustomPyQtElements.fontSlider import CustomFontSlider
 from CustomPyQtElements.watermarkTextField import CustomWatermarkInput
 from CustomPyQtElements.imageContainer import ReactiveImageField
@@ -10,6 +18,7 @@ from CustomPyQtElements.BaseElements.fileSelector import CustomFileSelector
 from CustomPyQtElements.BaseElements.inputField import ReactiveCustomInput
 
 # TODO: Check for beter looks with QtSS (Qt Style Sheets)
+
 
 class Window(QWidget):
     def __init__(self, parent: QWidget | None) -> None:
@@ -69,7 +78,22 @@ class Window(QWidget):
         # Attach watermark overlay to changes in font color & Update after initialisation, because of the default values
         color_picker._color_subject.attach(preview_watermark)
 
-        # Save/Cancel buttons
+
+        buttons_layout = QHBoxLayout()
+
+        # Save/Export buttons
+        save_button = CustomSaveButton()
+
+        # Cancel button
+        cancel_button = QPushButton("Cancel")
+        @cancel_button.clicked.connect
+        def _():
+            sys.exit(0)
+
+        buttons_layout.addWidget(save_button)
+        buttons_layout.addWidget(cancel_button)
+
+        right_layout.addLayout(buttons_layout)
 
         application_layout = QHBoxLayout()
         application_layout.addLayout(left_layout)

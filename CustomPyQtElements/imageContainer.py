@@ -42,6 +42,7 @@ class ReactiveImageField(Observer):
     def getImageLabel(self) -> QLabel:
         return self._image_container
 
+
 # TODO: Be able to change the watermark, example: Diagonal over the image, multi-line or through the middle or vertical/turned 45 degrees, also found in imageHelper
 class ReactiveImageOverlay(Observer):
     _overlay_container: QLabel
@@ -64,7 +65,9 @@ class ReactiveImageOverlay(Observer):
             case AlphaSubject():
                 image_helper.setFontAlpha(subject.getAlphaValue())
             case ColorSubject():
+                # TODO: Prevent duplicate call, most likely once from color_dialog and once from hex_field
                 image_helper.setFontColor(subject.getColorAsRGBList())
+                print(f"Container: {image_helper.getFontColor()}")
             case _:
                 print("Subject has not been implemented yet.")
 

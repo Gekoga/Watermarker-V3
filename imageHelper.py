@@ -1,6 +1,7 @@
 from PIL import Image, ImageFont, ImageDraw
 
 
+# TODO: Rewrite this for more OOP, single purpose classes
 class ImageHelper:
     TARGET_WIDTH = int(300)
 
@@ -62,6 +63,9 @@ class ImageHelper:
         self._ink_color = font_color
         self._ink_color.append(font_alpha)
 
+    def getFontColor(self):
+        return self._ink_color
+
     # TODO: Be able to change the watermark, example: Diagonal over the image, multi-line or through the middle or vertical/turned 45 degrees, also found in imageContainer
     def createTextOverlay(self, overlay_text: str):
         overlay_image = self.getCopyOfOverlay()
@@ -80,3 +84,11 @@ class ImageHelper:
         )
 
         return overlay_image
+
+# TODO: write the export function
+    def exportImage(self):
+        # Get the original image
+        # Get the watermark text with the right size for the original image
+        # Combine the two
+        # Save the image with the marked name
+        print("Export the image")
