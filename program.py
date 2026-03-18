@@ -9,6 +9,7 @@ from CustomPyQtElements.imageContainer import ReactiveImageOverlay
 from CustomPyQtElements.BaseElements.fileSelector import CustomFileSelector
 from CustomPyQtElements.BaseElements.inputField import ReactiveCustomInput
 
+# TODO: Check for beter looks with QtSS (Qt Style Sheets)
 
 class Window(QWidget):
     def __init__(self, parent: QWidget | None) -> None:

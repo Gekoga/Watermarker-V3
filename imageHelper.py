@@ -38,7 +38,7 @@ class ImageHelper:
         self._preview_height = int(self.TARGET_WIDTH * self._aspect_ratio)
 
         self._empty_overlay_image = Image.new(
-            "RGBA", [self._preview_width, self._preview_height], (0, 0, 255, 100)
+            "RGBA", [self._preview_width, self._preview_height], (0, 0, 0, 0)
         )
 
     def getCopyOfOverlay(self) -> Image.Image | None:
@@ -62,6 +62,7 @@ class ImageHelper:
         self._ink_color = font_color
         self._ink_color.append(font_alpha)
 
+    # TODO: Be able to change the watermark, example: Diagonal over the image, multi-line or through the middle or vertical/turned 45 degrees, also found in imageContainer
     def createTextOverlay(self, overlay_text: str):
         overlay_image = self.getCopyOfOverlay()
 

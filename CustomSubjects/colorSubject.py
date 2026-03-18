@@ -2,7 +2,7 @@ from observerPattern import Subject
 from PyQt6.QtGui import QColor
 
 
-# Created an own file, to prefent circular imports
+# Created an own file, to prevent circular imports
 class ColorSubject(Subject):
     _color: QColor
 

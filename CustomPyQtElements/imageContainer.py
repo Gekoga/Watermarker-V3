@@ -42,7 +42,7 @@ class ReactiveImageField(Observer):
     def getImageLabel(self) -> QLabel:
         return self._image_container
 
-
+# TODO: Be able to change the watermark, example: Diagonal over the image, multi-line or through the middle or vertical/turned 45 degrees, also found in imageHelper
 class ReactiveImageOverlay(Observer):
     _overlay_container: QLabel
     _overlay_text: str
@@ -57,6 +57,7 @@ class ReactiveImageOverlay(Observer):
             case WatermarkTextSubject():
                 self._overlay_text = subject.getWatermarkText()
             case FileNameSubject():
+                # TODO: Remove the print here
                 print("FileNameSubject")
             case FontSubject():
                 image_helper.setFontSize(subject.getFontSize())
